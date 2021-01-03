@@ -14,7 +14,7 @@ func main() {
 ```
 
 ## bufioによるスキャン
-行ごと読み込む。
+行ごと読み込む。実行回数が増えてくるとこっちのほうが早い。
 
 ```go
 var sc = bufio.NewScanner(os.Stdin)
@@ -28,7 +28,24 @@ func main() {
 }
 ```
 
+`fmt.Scan()` のように半角スペース区切りで読み込みたい場合は以下のようにする。
+
+```go
+func main() {
+	sc.Split(bufio.ScanWords)
+	sc.Scan()
+...
+```
+
 # forループ
+
+## 指定回数のループ
+
+```go
+for i :=0; i < n; i++ {
+	// some processing
+}
+```
 
 ## 配列(文字列)
 `rune` の扱いに困りたくないので、 `[]string` 型にしてから `range` でループするのが手っ取り早そう。
@@ -44,7 +61,30 @@ func main() {
 }
 ```
 
-# 配列の操作
+`[]string` にしなくても、 `string()` を使えばよさそう。
+
+```go
+func main() {
+	var a string
+	fmt.Scan(&a)
+
+	for _, s := range a {
+		fmt.Println(string(s))
+	}
+}
+```
+
+# 配列(スライス)の操作
+
+## 配列宣言時の要素数
+要素数は定数でないといけない。
+
+```go
+// こういうことはできない
+let n int
+fmt.Scan(&n)
+ss = [n]string
+```
 
 ## 結合
 `strings.Join()` を使う。
@@ -63,6 +103,37 @@ strs = append(strs, s)
 // 誤
 append(strs, s)
 ```
+
+## 配列の挿入(多次元配列)
+
+```go
+// 宣言
+arr := [][]int{}
+
+// 挿入
+arr = append(arr, []int{1, 2})
+```
+
+## ソート
+`sort` ライブラリを使えばいいっぽい
+
+```go
+// 文字列ソート ABC042 Bより
+func main() {
+	var n, l int
+	fmt.Scan(&n, &l)
+	ss := []string{}
+
+	for i := 0; i < n; i++ {
+		sc.Scan()
+		ss = append(ss, sc.Text())
+	}
+	sort.Sort(sort.StringSlice(ss)) // sort.IntSlice()などもある
+	fmt.Println(strings.Join(ss, ""))
+}
+```
+
+
 
 # マップの操作
 
